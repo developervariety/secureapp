@@ -14,5 +14,5 @@ This project is **in development** and not intended for production use yet.
 * Minimalistic web panel
 * Open sourced
 
-# Credits
+### Credits
 * BahNahNah
