@@ -1,0 +1,17 @@
+using System;
+
+namespace SecureApp.Extensions
+{
+    public class Attributes
+    {
+        [AttributeUsage(AttributeTargets.Method)]
+        public class ServerCall : Attribute
+        { 
+        }
+
+        [AttributeUsage(AttributeTargets.Method)]
+        public class ServerExecution : Attribute
+        {
+        }
+    }
+}
