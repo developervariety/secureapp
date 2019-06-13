@@ -3,7 +3,7 @@ Socket-based licensing system for .NET
 
 This project is **in development** and not intended for production use yet.
 
-## Features
+## Features (current and to be implemented)
 * License keys
 * Assembly verification
 * Remote code execution
