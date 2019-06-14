@@ -41,13 +41,12 @@
     <Compile Include="Compression\Gzip.cs" />
     <Compile Include="Crypt\Aes.cs" />
     <Compile Include="Crypt\Hash.cs" />
-    <Compile Include="Extensions\Attributes.cs" />
     <Compile Include="Extensions\Formatter.cs" />
-    <Compile Include="Networking\eSock.cs" />
+    <Compile Include="Model\Interface\ISocketEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model" />
+    <Folder Include="Networking" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

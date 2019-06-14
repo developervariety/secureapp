@@ -1,13 +1,13 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using SecureAppUtil.Networking;
+using SecureAppUtil.Model.Interface;
 
 // ReSharper disable IdentifierTypo
 
 namespace SecureAppUtil.Crypt
 {
-    public class Aes : ESock.IESockEncryption
+    public class Aes : ISocketEncryption
     {
         private static readonly RandomNumberGenerator Random = RandomNumberGenerator.Create();
 
