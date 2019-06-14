@@ -13,7 +13,6 @@ namespace SecureApp.Model.Networking
         public string ProductId { get; set; }
         public string LicenseKey { get; set; }
 
-        
         public bool Handshake { get; set; }
         
         public ClientSession(Guid id,Socket.Server.SocketClient socket)
