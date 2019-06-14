@@ -7,7 +7,7 @@
     <ProjectGuid>{5B2E1C7F-DFDF-4455-B996-3AEA493EBD4A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureApp</RootNamespace>
+    <RootNamespace>SecureAppUtil</RootNamespace>
     <AssemblyName>SecureApp.Utilities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,11 +43,11 @@
     <Compile Include="Crypt\Hash.cs" />
     <Compile Include="Extensions\Attributes.cs" />
     <Compile Include="Extensions\Formatter.cs" />
-    <Compile Include="Extensions\Random.cs" />
     <Compile Include="Networking\eSock.cs" />
-    <Compile Include="Networking\Model\ClientData.cs" />
-    <Compile Include="Networking\NetworkPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

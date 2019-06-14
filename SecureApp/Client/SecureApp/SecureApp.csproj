@@ -38,15 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication.cs" />
     <Compile Include="Exceptions\HandshakeDeclinedException.cs" />
     <Compile Include="Exceptions\NotConnectedToServerException.cs" />
     <Compile Include="Exceptions\ServerUnavailableException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecureApp.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Protection" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SecureApp.Utilities\SecureApp.Utilities.csproj">

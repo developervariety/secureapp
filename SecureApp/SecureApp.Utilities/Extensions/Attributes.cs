@@ -1,6 +1,6 @@
 using System;
 
-namespace SecureApp.Extensions
+namespace SecureAppUtil.Extensions
 {
     public class Attributes
     {

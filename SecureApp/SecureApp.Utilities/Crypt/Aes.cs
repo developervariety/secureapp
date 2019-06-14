@@ -1,10 +1,11 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
-using SecureApp.Networking;
+using SecureAppUtil.Networking;
 
-namespace SecureApp.Crypt
+// ReSharper disable IdentifierTypo
+
+namespace SecureAppUtil.Crypt
 {
     public class Aes : ESock.IESockEncryption
     {
@@ -34,7 +35,7 @@ namespace SecureApp.Crypt
             if (input == null || input.Length ==0)
                 throw new ArgumentException("Secret Message Required!", nameof(input));
 
-            byte[] payload = new byte[((SaltBitSize / 8) * 2) + nonSecretPayload.Length];
+            byte[] payload = new byte[SaltBitSize / 8 * 2 + nonSecretPayload.Length];
 
             Array.Copy(nonSecretPayload, payload, nonSecretPayload.Length);
             int payloadIndex = nonSecretPayload.Length;
@@ -168,7 +169,7 @@ namespace SecureApp.Crypt
             {
                 byte[] sentTag = new byte[hmac.HashSize / 8];
                 byte[] calcTag = hmac.ComputeHash(encryptedMessage, 0, encryptedMessage.Length - sentTag.Length);
-                const int ivLength = (BlockBitSize / 8);
+                const int ivLength = BlockBitSize / 8;
 
                 if (encryptedMessage.Length < sentTag.Length + nonSecretPayloadLength + ivLength)
                     return null;

@@ -2,12 +2,11 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using SecureApp.Crypt;
-using SecureApp.Extensions;
+using SecureAppUtil.Crypt;
+using SecureAppUtil.Extensions;
 
-namespace SecureApp.Networking
+namespace SecureAppUtil.Networking
 {
     public static class ESock
     {

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace SecureApp.Extensions
+namespace SecureAppUtil.Extensions
 {
     public static class Formatter
     {
@@ -29,7 +29,7 @@ namespace SecureApp.Extensions
             catch (Exception ex)
             {
                 Console.WriteLine("[eSock] {0}", ex);
-                return default(TT);
+                return default;
             }
         }
     }

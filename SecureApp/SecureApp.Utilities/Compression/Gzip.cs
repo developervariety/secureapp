@@ -1,7 +1,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace SecureApp.Compression
+namespace SecureAppUtil.Compression
 {
     public static class Gzip
     {
@@ -26,7 +26,7 @@ namespace SecureApp.Compression
                     using (GZipStream gz = new GZipStream(ms, CompressionMode.Decompress))
                     {
                         byte[] byteBuffer = new byte[1024];
-                        int bytesRead = 0;
+                        int bytesRead;
                         while ((bytesRead = gz.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
                         {
                             decompressed.Write(byteBuffer, 0, bytesRead);
