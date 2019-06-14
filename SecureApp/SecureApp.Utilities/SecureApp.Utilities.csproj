@@ -32,9 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DeviceId, Version=4.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\DeviceId.4.2.0\lib\net40\DeviceId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -42,11 +47,16 @@
     <Compile Include="Extensions\Crypt\Aes.cs" />
     <Compile Include="Extensions\Crypt\Hash.cs" />
     <Compile Include="Extensions\Formatter.cs" />
+    <Compile Include="Hardware\Fingerprint.cs" />
+    <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Interface\ISocketEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\Networking" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
