@@ -36,9 +36,23 @@ namespace SecureApp
             }
             
             fakeClient.Send(Guid.Empty, "Handshake", secure);
-            
-            
-            
+            fakeClient.OnDataRetrieved += (sender, data) =>
+            {
+                Guid guid = (Guid) data[0];
+
+                if (guid == Guid.Empty)
+                {
+                    // temporary code, better demo client project in-dev
+
+                    if ((string) data[1] == "Handshake")
+                    {
+                        // Recommended to change this in production, server to client verification..
+                        if (!data[2].Equals("client"))
+                            Console.WriteLine("Server is not genuine");
+                    }
+                }
+            };
+
             Console.Read();
         }
         
@@ -46,6 +60,7 @@ namespace SecureApp
         {
             SecureAppUtil.Extensions.Networking.Socket.Client fakeClient = new SecureAppUtil.Extensions.Networking.Socket.Client();
             fakeClient.Connect("localhost", 0709);
+            
             return fakeClient;
         }
 
@@ -62,9 +77,9 @@ namespace SecureApp
                 {
                     // TODO:: find a better way to do this..
                     Type type = Type.GetType($"SecureApp.Core.Command.{data[1]}");
-                    object obj = Activator.CreateInstance(type);
+                    object obj = Activator.CreateInstance(type ?? throw new InvalidOperationException());
                     MethodInfo methodInfo = type.GetMethod("Work");
-                    methodInfo.Invoke(obj, new object[] {data, clientSession, socketClient});
+                    methodInfo?.Invoke(obj, new object[] {data, clientSession, socketClient});
                 }
             }
         }
