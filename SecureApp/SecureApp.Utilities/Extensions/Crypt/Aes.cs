@@ -5,7 +5,7 @@ using SecureAppUtil.Model.Interface;
 
 // ReSharper disable IdentifierTypo
 
-namespace SecureAppUtil.Crypt
+namespace SecureAppUtil.Extensions.Crypt
 {
     public class Aes : ISocketEncryption
     {

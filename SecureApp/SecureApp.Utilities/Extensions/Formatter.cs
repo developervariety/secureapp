@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using SecureAppUtil.Extensions.Compression;
 
 namespace SecureAppUtil.Extensions
 {
@@ -12,7 +13,7 @@ namespace SecureAppUtil.Extensions
             using (MemoryStream ms = new MemoryStream())
             {
                 bf.Serialize(ms, input);
-                return Compression.Gzip.Compress(ms.ToArray());
+                return Gzip.Compress(ms.ToArray());
             }
         }
 
@@ -21,7 +22,7 @@ namespace SecureAppUtil.Extensions
             try
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                using (MemoryStream ms = new MemoryStream(Compression.Gzip.Decompress(input)))
+                using (MemoryStream ms = new MemoryStream(Gzip.Decompress(input)))
                 {
                     return (TT)bf.Deserialize(ms);
                 }

@@ -1,7 +1,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace SecureAppUtil.Compression
+namespace SecureAppUtil.Extensions.Compression
 {
     public static class Gzip
     {
