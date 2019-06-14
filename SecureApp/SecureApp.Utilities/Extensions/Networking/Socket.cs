@@ -187,9 +187,9 @@ namespace SecureAppUtil.Extensions.Networking
                             client.NetworkSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, RetrieveCallback, client);
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        throw ex;
                     }
                 }
             }
