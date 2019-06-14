@@ -43,17 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\Compression\Gzip.cs" />
     <Compile Include="Extensions\Crypt\Aes.cs" />
     <Compile Include="Extensions\Crypt\Hash.cs" />
     <Compile Include="Extensions\Formatter.cs" />
+    <Compile Include="Extensions\Networking\CryptSettings.cs" />
+    <Compile Include="Extensions\Networking\Socket.cs" />
     <Compile Include="Hardware\Fingerprint.cs" />
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Interface\ISocketEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\Networking" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
