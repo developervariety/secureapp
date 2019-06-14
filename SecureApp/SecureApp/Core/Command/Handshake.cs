@@ -17,15 +17,14 @@ namespace SecureApp.Core.Command
 
             clientSession.Handshake = true;
             
-            string server = "\x9E\x8D\x9A\x81\x8E\x91";
+            string server = "\u1803\u6003\u4803\u2803\u7003\uA003";
  
-            for (int ONXjG = 0, KnCmq = 0; ONXjG < 6; ONXjG++)
+            for (int LwloM = 0, LuZMc = 0; LwloM < 6; LwloM++)
             {
-                KnCmq = server[ONXjG];
-                KnCmq ^= 0xE8;
-                server = server.Substring(0, ONXjG) + (char)(KnCmq & 0xFF) + server.Substring(ONXjG + 1);
+                LuZMc = server[LwloM];
+                LuZMc = ((LuZMc << 5) | ( (LuZMc & 0xFFFF) >> 11)) & 0xFFFF;
+                server = server.Substring(0, LwloM) + (char)(LuZMc & 0xFFFF) + server.Substring(LwloM + 1);
             }
-
             socketClient.Send(Guid.Empty, "Handshake", server);
         }
     }
