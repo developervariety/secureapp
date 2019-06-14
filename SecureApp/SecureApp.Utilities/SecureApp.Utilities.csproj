@@ -48,6 +48,7 @@
     <Compile Include="Extensions\Formatter.cs" />
     <Compile Include="Extensions\Networking\CryptSettings.cs" />
     <Compile Include="Extensions\Networking\Socket.cs" />
+    <Compile Include="Extensions\Random.cs" />
     <Compile Include="Hardware\Fingerprint.cs" />
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Interface\ISocketEncryption.cs" />
