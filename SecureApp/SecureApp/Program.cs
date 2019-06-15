@@ -49,6 +49,20 @@ namespace SecureApp
                         // Recommended to change this in production, server to client verification..
                         if (!data[2].Equals("client"))
                             Console.WriteLine("Server is not genuine");
+                        else
+                        {
+                            string sharedSecret = Guid.NewGuid().ToString("N");
+                            
+                            fakeClient.Send(Guid.Empty, "SharedSecret", sharedSecret);
+
+                            fakeClient.Encryption.Key = sharedSecret;
+                            fakeClient.Encryption.Enabled = true;
+                        }
+                    }
+                    
+                    if ((string) data[1] == "SharedSecret")
+                    {
+                        Console.WriteLine(data[2]);
                     }
                 }
             };
