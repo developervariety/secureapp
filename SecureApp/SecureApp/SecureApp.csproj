@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Core\Command\Handshake.cs" />
     <Compile Include="Core\Command\SharedSecret.cs" />
+    <Compile Include="Core\Global.cs" />
     <Compile Include="Model\Interface\ICommand.cs" />
     <Compile Include="Model\Networking\ClientSession.cs" />
     <Compile Include="Program.cs" />
