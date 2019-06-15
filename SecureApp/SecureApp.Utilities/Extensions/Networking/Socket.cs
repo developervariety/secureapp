@@ -222,7 +222,9 @@ namespace SecureAppUtil.Extensions.Networking
                     {
                         byte[] serializedData = Formatter.Serialize(args);
                         if (Encryption != null)
+                        {
                             serializedData = Encryption.Encrypt(serializedData);
+                        }
 
                         byte[] packet;
                         using (MemoryStream packetStream = new MemoryStream())
@@ -286,7 +288,7 @@ namespace SecureAppUtil.Extensions.Networking
             private int _bufferSize = 1000000;
             public bool Connected { get; private set; }
             public byte[] PacketBuffer { get; private set; }
-            public CryptSettings Encryption { get; private set; }
+            public CryptSettings Encryption { get; set; }
             public int BufferSize
             {
                 get => _bufferSize;
@@ -310,13 +312,7 @@ namespace SecureAppUtil.Extensions.Networking
                 Connected = false;
                 Encryption = new CryptSettings();
             }
-
-            public Client(AddressFamily socketAddressFamily)
-                : this()
-            {
-                _globalSocket = new System.Net.Sockets.Socket(socketAddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            }
-
+            
             #endregion"
 
             #region " Connect "
@@ -332,44 +328,6 @@ namespace SecureAppUtil.Extensions.Networking
                 catch
                 {
                     return false;
-                }
-            }
-
-            public bool Connect(IPEndPoint endpoint)
-            {
-                try
-                {
-                    _globalSocket.Connect(endpoint);
-                    OnConnected();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-
-            public void ConnectAsync(string ip, int port)
-            {
-                _globalSocket.BeginConnect(ip, port, OnConnectAsync, null);
-            }
-
-            public void ConnectAsync(IPEndPoint endpoint)
-            {
-                _globalSocket.BeginConnect(endpoint, OnConnectAsync, null);
-            }
-
-            private void OnConnectAsync(IAsyncResult ar)
-            {
-                try
-                {
-                    _globalSocket.EndConnect(ar);
-                    OnConnect?.Invoke(this, true);
-                    OnConnected();
-                }
-                catch
-                {
-                    OnConnect?.Invoke(this, false);
                 }
             }
 
@@ -488,7 +446,7 @@ namespace SecureAppUtil.Extensions.Networking
                             _globalSocket.BeginReceive(PacketBuffer, 0, PacketBuffer.Length, SocketFlags.None, EndRetrieve, null);
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { throw ex; }
                 }   
             }
 
