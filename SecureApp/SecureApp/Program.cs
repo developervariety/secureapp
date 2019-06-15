@@ -20,63 +20,8 @@ namespace SecureApp
             Server.OnDataRetrieved += OnDataRetrieved;
 
             Console.WriteLine(Server.Start(0709) ? "Server is live!" : "Server failed to go live!");
-
-            SecureAppUtil.Extensions.Networking.Socket.Client fakeClient = CreateFakeClient();
-            
-            // Recommended to change this in production, client to server verification..
-            // Credits to stringencrypt for free version, other alternatives are a captcha or nothing at all
-            string secure = "\x0B\x8B\x93";
- 
-            for (int umzoP = 0, MKdOg = 0; umzoP < 3; umzoP++)
-            {
-                MKdOg = secure[umzoP];
-                MKdOg = ((MKdOg << 5) | ( (MKdOg & 0xFF) >> 3)) & 0xFF;
-                MKdOg ^= umzoP;
-                secure = secure.Substring(0, umzoP) + (char)(MKdOg & 0xFF) + secure.Substring(umzoP + 1);
-            }
-            
-            fakeClient.Send(Guid.Empty, "Handshake", secure);
-            fakeClient.OnDataRetrieved += (sender, data) =>
-            {
-                Guid guid = (Guid) data[0];
-
-                if (guid == Guid.Empty)
-                {
-                    // temporary code, better demo client project in-dev
-
-                    if ((string) data[1] == "Handshake")
-                    {
-                        // Recommended to change this in production, server to client verification..
-                        if (!data[2].Equals("client"))
-                            Console.WriteLine("Server is not genuine");
-                        else
-                        {
-                            string sharedSecret = Guid.NewGuid().ToString("N");
-                            
-                            fakeClient.Send(Guid.Empty, "SharedSecret", sharedSecret);
-
-                            fakeClient.Encryption.Key = sharedSecret;
-                            fakeClient.Encryption.Enabled = true;
-                        }
-                    }
-                    
-                    if ((string) data[1] == "SharedSecret")
-                    {
-                        Console.WriteLine(data[2]);
-                    }
-                }
-            };
-
-            Console.Read();
         }
-        
-        private static SecureAppUtil.Extensions.Networking.Socket.Client CreateFakeClient()
-        {
-            SecureAppUtil.Extensions.Networking.Socket.Client fakeClient = new SecureAppUtil.Extensions.Networking.Socket.Client();
-            fakeClient.Connect("localhost", 0709);
-            
-            return fakeClient;
-        }
+
 
         #region " Network Callbacks "
         
@@ -86,15 +31,14 @@ namespace SecureApp
             {
                 ClientSession clientSession = (ClientSession) socketClient.Tag;
                 Guid guid = (Guid) data[0];
-                    
-                if (guid == Guid.Empty)
-                {
-                    // TODO:: find a better way to do this..
-                    Type type = Type.GetType($"SecureApp.Core.Command.{data[1]}");
-                    object obj = Activator.CreateInstance(type ?? throw new InvalidOperationException());
-                    MethodInfo methodInfo = type.GetMethod("Work");
-                    methodInfo?.Invoke(obj, new object[] {data, clientSession, socketClient});
-                }
+
+                if (guid != Guid.Empty) return;
+                
+                // TODO:: find a better way to do this..
+                Type type = Type.GetType($"SecureApp.Core.Command.{data[1]}");
+                object obj = Activator.CreateInstance(type ?? throw new InvalidOperationException());
+                MethodInfo methodInfo = type.GetMethod("Work");
+                methodInfo?.Invoke(obj, new object[] {data, clientSession, socketClient});
             }
         }
 
