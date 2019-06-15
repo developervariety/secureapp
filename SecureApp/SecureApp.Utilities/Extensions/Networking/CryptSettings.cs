@@ -6,8 +6,8 @@ namespace SecureAppUtil.Extensions.Networking
 {
     public class CryptSettings
     {
-        public ISocketEncryption Method { get; set; }
-        public bool Enabled { get; set; }
+        private ISocketEncryption Method { get; }
+        public bool Enabled { private get; set; }
         public string Key { get; set; }
 
         public CryptSettings()
