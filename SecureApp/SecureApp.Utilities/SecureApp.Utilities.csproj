@@ -36,15 +36,17 @@
       <HintPath>..\packages\DeviceId.4.2.0\lib\net40\DeviceId.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Crypt\Aes.cs" />
     <Compile Include="Extensions\Crypt\Hash.cs" />
+    <Compile Include="Extensions\Crypt\Polymorphic.cs" />
     <Compile Include="Extensions\Formatter.cs" />
     <Compile Include="Extensions\Networking\CryptSettings.cs" />
     <Compile Include="Extensions\Networking\Socket.cs" />
