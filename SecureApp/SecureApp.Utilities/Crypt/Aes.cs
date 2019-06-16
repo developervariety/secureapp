@@ -3,18 +3,18 @@ using System.Security.Cryptography;
 using System.Text;
 using SecureAppUtil.Model.Interface;
 
-namespace SecureAppUtil.Extensions.Crypt
+namespace SecureAppUtil.Crypt
 {
     public class Aes : ISocketEncryption
     {
         public byte[] Encrypt(byte[] input, string key)
         {
-            return Encrypt(input, key, @"@~,^A2Z573{8-m\[");
+            return Encrypt(input, key, "5AL7NEUA");
         }
 
         public byte[] Decrypt(byte[] input, string key)
         {
-            return Decrypt(input, key, @"@~,^A2Z573{8-m\[");
+            return Decrypt(input, key, "5AL7NEUA");
         }
         
         #region " Encryption "
@@ -29,6 +29,9 @@ namespace SecureAppUtil.Extensions.Crypt
                     {
                         aes.Key = pwd.GetBytes(aes.KeySize / 8);
                         aes.IV = pwd.GetBytes(aes.BlockSize / 8);
+
+                        //aes.Padding = PaddingMode.PKCS7;
+                        
                         using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
                         {
                             cs.Write(payload, 0, payload.Length);
@@ -54,6 +57,9 @@ namespace SecureAppUtil.Extensions.Crypt
                     {
                         aes.Key = pwd.GetBytes(aes.KeySize / 8);
                         aes.IV = pwd.GetBytes(aes.BlockSize / 8);
+
+                        //aes.Padding = PaddingMode.PKCS7;
+                        
                         using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
                         {
                             cs.Write(payload, 0, payload.Length);

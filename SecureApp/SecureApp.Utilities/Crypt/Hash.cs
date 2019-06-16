@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SecureAppUtil.Extensions.Crypt
+namespace SecureAppUtil.Crypt
 {
     public static class Hash
     {

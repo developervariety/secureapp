@@ -1,12 +1,12 @@
 using System;
 
-namespace SecureAppUtil.Extensions.Crypt
+namespace SecureAppUtil.Crypt
 {    
     public class Polymorphic
     {
         public string Encrypt(string input, string key)
         {
-            System.Random r = new System.Random();
+            Random r = new Random();
             int kc = 0;
             char[] text = input.ToCharArray();
             char[] keyarr = key.ToCharArray();

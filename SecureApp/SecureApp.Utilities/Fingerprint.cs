@@ -5,12 +5,10 @@ using DeviceId.Encoders;
 using DeviceId.Formatters;
 using SecureAppUtil.Model;
 
-namespace SecureAppUtil.Hardware
+namespace SecureAppUtil
 {
     public class Fingerprint
-    {
-        // Recommended to change this up for production use.
-        
+    {        
         public string Generate()
         {
             if (!Directory.Exists(Location.SecureApp))

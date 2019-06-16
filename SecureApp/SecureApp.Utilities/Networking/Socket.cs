@@ -3,8 +3,9 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using SecureAppUtil.Extensions;
 
-namespace SecureAppUtil.Extensions.Networking
+namespace SecureAppUtil.Networking
 {
     /// <summary>
     /// eSock 2.0 by BahNahNah (modified)

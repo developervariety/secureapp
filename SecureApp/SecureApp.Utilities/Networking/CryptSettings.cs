@@ -1,8 +1,8 @@
 using System;
-using SecureAppUtil.Extensions.Crypt;
+using SecureAppUtil.Crypt;
 using SecureAppUtil.Model.Interface;
 
-namespace SecureAppUtil.Extensions.Networking
+namespace SecureAppUtil.Networking
 {
     public class CryptSettings
     {
