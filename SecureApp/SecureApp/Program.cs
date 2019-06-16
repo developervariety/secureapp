@@ -10,7 +10,7 @@ namespace SecureApp
     internal static class Program
     {
         private static readonly Dictionary<Guid, ClientSession> ConnectedClients = new Dictionary<Guid, ClientSession>();
-        private static readonly SecureAppUtil.Extensions.Networking.Socket.Server Server = new SecureAppUtil.Extensions.Networking.Socket.Server();
+        private static readonly SecureAppUtil.Networking.Socket.Server Server = new SecureAppUtil.Networking.Socket.Server();
 
         public static void Main()
         {
@@ -25,7 +25,7 @@ namespace SecureApp
 
         #region " Network Callbacks "
         
-        private static void OnDataRetrieved(SecureAppUtil.Extensions.Networking.Socket.Server sender, SecureAppUtil.Extensions.Networking.Socket.Server.SocketClient socketClient, object[] data)
+        private static void OnDataRetrieved(SecureAppUtil.Networking.Socket.Server sender, SecureAppUtil.Networking.Socket.Server.SocketClient socketClient, object[] data)
         {            
             lock (socketClient)
             {
@@ -42,7 +42,7 @@ namespace SecureApp
             }
         }
 
-        private static void OnClientDisconnect(SecureAppUtil.Extensions.Networking.Socket.Server sender, SecureAppUtil.Extensions.Networking.Socket.Server.SocketClient socketClient, SocketError er)
+        private static void OnClientDisconnect(SecureAppUtil.Networking.Socket.Server sender, SecureAppUtil.Networking.Socket.Server.SocketClient socketClient, SocketError er)
         {            
             ClientSession clientData = (ClientSession)socketClient.Tag;
             
@@ -50,12 +50,12 @@ namespace SecureApp
                 ConnectedClients.Remove(clientData.Id);
         }
 
-        private static bool OnClientConnecting(SecureAppUtil.Extensions.Networking.Socket.Server sender, Socket csock)
+        private static bool OnClientConnecting(SecureAppUtil.Networking.Socket.Server sender, Socket csock)
         {
             return true;
         }
 
-        private static void OnClientConnect(SecureAppUtil.Extensions.Networking.Socket.Server sender, SecureAppUtil.Extensions.Networking.Socket.Server.SocketClient socketClient)
+        private static void OnClientConnect(SecureAppUtil.Networking.Socket.Server sender, SecureAppUtil.Networking.Socket.Server.SocketClient socketClient)
         {
             ClientSession clientSession = new ClientSession(Random.Guid(), socketClient);
             

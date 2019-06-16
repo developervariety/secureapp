@@ -1,4 +1,4 @@
-using SecureAppUtil.Extensions.Crypt;
+using SecureAppUtil.Crypt;
 
 namespace SecureApp.Core
 {

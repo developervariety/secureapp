@@ -1,7 +1,7 @@
 using System;
 using SecureApp.Model.Interface;
 using SecureApp.Model.Networking;
-using SecureAppUtil.Extensions.Networking;
+using SecureAppUtil.Networking;
 
 namespace SecureApp.Core.Command
 {

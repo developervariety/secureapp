@@ -1,5 +1,5 @@
 using SecureApp.Model.Networking;
-using SecureAppUtil.Extensions.Networking;
+using SecureAppUtil.Networking;
 
 namespace SecureApp.Model.Interface
 {
