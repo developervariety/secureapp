@@ -4,8 +4,6 @@ using System.Text;
 
 namespace SecureAppUtil.Extensions
 {
-    // Credits: https://gist.github.com/erdomke/9335c394c5cc65404c4cf9aceab04143
-
     public class Base32
     {
         private const string EncodingTable = "ybndrfg8ejkmcpqxot1uwisza345h769";

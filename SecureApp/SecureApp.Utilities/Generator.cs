@@ -45,42 +45,49 @@ namespace SecureAppUtil
 
         public bool Validate(string licenseKey, ref LicenseKey data)
         {
-            if (string.IsNullOrEmpty(licenseKey))
-                throw new ArgumentNullException(licenseKey, "License Key is null or empty.");
-            
-            if (licenseKey.Length != 30)
-                throw new ArgumentException("License Key is invalid.", licenseKey);
-            
-            licenseKey = licenseKey.ToLowerInvariant().Replace("-", string.Empty);
-            byte[] keyBytes = Base32.Decode(licenseKey);
-            
-            byte[] aesBytes = Aes.Decrypt(keyBytes, ApplicationSecret);
-                
-            byte[] appIdBytes = new byte[2];
-            byte[] tierBytes = new byte[2];
-            byte[] editionBytes = new byte[2];
-            byte[] expirationBytes = new byte[4];
-                
-            using (MemoryStream memStream = new MemoryStream(aesBytes))
+            try
             {
-                memStream.Read(appIdBytes, 0, 1);
-                memStream.Read(tierBytes, 0, 1);
-                memStream.Read(editionBytes, 0, 1);
-                memStream.Read(expirationBytes, 0, 4);
+                if (string.IsNullOrEmpty(licenseKey))
+                    throw new ArgumentNullException(licenseKey, "License Key is null or empty.");
+            
+                if (licenseKey.Length != 30)
+                    throw new ArgumentException("License Key is invalid.", licenseKey);
+            
+                licenseKey = licenseKey.ToLowerInvariant().Replace("-", string.Empty);
+                byte[] keyBytes = Base32.Decode(licenseKey);
+            
+                byte[] aesBytes = Aes.Decrypt(keyBytes, ApplicationSecret);
+                
+                byte[] appIdBytes = new byte[2];
+                byte[] tierBytes = new byte[2];
+                byte[] editionBytes = new byte[2];
+                byte[] expirationBytes = new byte[4];
+                
+                using (MemoryStream memStream = new MemoryStream(aesBytes))
+                {
+                    memStream.Read(appIdBytes, 0, 1);
+                    memStream.Read(tierBytes, 0, 1);
+                    memStream.Read(editionBytes, 0, 1);
+                    memStream.Read(expirationBytes, 0, 4);
+                }
+
+                LicenseKey licenseKeyData = new LicenseKey
+                {
+                    ApplicationId = BitConverter.ToString(appIdBytes, 0),
+                    Tier = (Tier) BitConverter.ToInt16(tierBytes, 0),
+                    Edition = (Edition) BitConverter.ToInt16(editionBytes, 0)
+                };
+                
+                string text = BitConverter.ToUInt32(expirationBytes, 0).ToString().PadLeft(8, '0');
+                licenseKeyData.Expiration = new DateTime(Convert.ToInt16(text.Substring(4, 4)), Convert.ToInt16(text.Substring(2, 2)), Convert.ToInt16(text.Substring(0, 2)));
+
+                data = licenseKeyData;
+                return true;
             }
-
-            LicenseKey licenseKeyData = new LicenseKey
+            catch
             {
-                ApplicationId = BitConverter.ToString(appIdBytes, 0),
-                Tier = (Tier) BitConverter.ToInt16(tierBytes, 0),
-                Edition = (Edition) BitConverter.ToInt16(editionBytes, 0)
-            };
-                
-            string text = BitConverter.ToUInt32(expirationBytes, 0).ToString().PadLeft(8, '0');
-            licenseKeyData.Expiration = new DateTime(Convert.ToInt16(text.Substring(4, 4)), Convert.ToInt16(text.Substring(2, 2)), Convert.ToInt16(text.Substring(0, 2)));
-
-            data = licenseKeyData;
-            return true;
+                return false;
+            }
         }
     }
 }
