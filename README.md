@@ -10,7 +10,6 @@ This project is **in development** and not intended for production use yet.
 * Remote variables
 * Secure and compressed communication
 * Polling checks (continously checks if the client is authenticated etc.)
-* Minimalistic web panel
 * Open sourced
 
 ### Credits
