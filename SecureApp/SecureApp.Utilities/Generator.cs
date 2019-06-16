@@ -19,7 +19,7 @@ namespace SecureAppUtil
 
         public string Generate(LicenseKey data)
         {
-            byte[] unqBytes = BitConverter.GetBytes((short) 6527);
+            byte[] appIdBytes = BitConverter.GetBytes(data.ApplicationId.Length);
             byte[] tierBytes = BitConverter.GetBytes((byte) data.Tier);
             byte[] editionBytes = BitConverter.GetBytes((byte) data.Edition);
             byte[] expirationBytes = BitConverter.GetBytes(Convert.ToUInt32(data.Expiration.Day.ToString().PadLeft(2, '0') + data.Expiration.Month.ToString().PadLeft(2, '0') + data.Expiration.Year));
@@ -28,7 +28,7 @@ namespace SecureAppUtil
             byte[] memArray;
             using (MemoryStream memStream = new MemoryStream())
             {
-                memStream.Write(unqBytes, 0, 1);
+                memStream.Write(appIdBytes, 0, 1);
                 memStream.Write(tierBytes, 0, 1);
                 memStream.Write(editionBytes, 0, 1);
                 memStream.Write(expirationBytes, 0, 4);
@@ -56,14 +56,14 @@ namespace SecureAppUtil
             
             byte[] aesBytes = Aes.Decrypt(keyBytes, ApplicationSecret);
                 
-            byte[] unqBytes = new byte[2];
+            byte[] appIdBytes = new byte[2];
             byte[] tierBytes = new byte[2];
             byte[] editionBytes = new byte[2];
             byte[] expirationBytes = new byte[4];
                 
             using (MemoryStream memStream = new MemoryStream(aesBytes))
             {
-                memStream.Read(unqBytes, 0, 1);
+                memStream.Read(appIdBytes, 0, 1);
                 memStream.Read(tierBytes, 0, 1);
                 memStream.Read(editionBytes, 0, 1);
                 memStream.Read(expirationBytes, 0, 4);
@@ -71,6 +71,7 @@ namespace SecureAppUtil
 
             LicenseKey licenseKeyData = new LicenseKey
             {
+                ApplicationId = BitConverter.ToString(appIdBytes, 0),
                 Tier = (Tier) BitConverter.ToInt16(tierBytes, 0),
                 Edition = (Edition) BitConverter.ToInt16(editionBytes, 0)
             };

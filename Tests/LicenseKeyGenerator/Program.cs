@@ -3,6 +3,7 @@ using SecureAppUtil;
 using SecureAppUtil.Extensions;
 using SecureAppUtil.Model;
 using SecureAppUtil.Model.Enum.License;
+using Random = SecureAppUtil.Extensions.Random;
 
 namespace LicenseKeyGenerator
 {
@@ -14,6 +15,7 @@ namespace LicenseKeyGenerator
         {
             LicenseKey data = new LicenseKey
             {
+                ApplicationId = Random.Guid().ToString("N"),
                 Tier = Tier.Bronze,
                 Edition = Edition.Professional,
                 Expiration = DateTime.Now.AddDays(30)
@@ -28,6 +30,7 @@ namespace LicenseKeyGenerator
             Console.Write($"This license key is {status}.");
             Console.WriteLine(Environment.NewLine);
             
+            Console.WriteLine($"AppId: {data.ApplicationId}");
             Console.WriteLine($"Tier: {data.Tier}");
             Console.WriteLine($"Edition: {data.Edition}");
             Console.WriteLine($"Expiration date: {data.Expiration:g}");
