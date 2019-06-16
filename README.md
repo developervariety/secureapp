@@ -16,3 +16,4 @@ This project is **in development** and not intended for production use yet.
 ### Credits
 * BahNahNah
 * Ethereal (polymorphic class)
+* FoxLearn (idea behind license key generation)

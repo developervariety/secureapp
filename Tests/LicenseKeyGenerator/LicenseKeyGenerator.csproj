@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5B2E1C7F-DFDF-4455-B996-3AEA493EBD4A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{27399CF8-CEEE-4F43-8724-6936F0947255}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureAppUtil</RootNamespace>
-    <AssemblyName>SecureApp.Utilities</AssemblyName>
+    <RootNamespace>LicenseKeyGenerator</RootNamespace>
+    <AssemblyName>LicenseKeyGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,37 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DeviceId, Version=4.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\DeviceId.4.2.0\lib\net40\DeviceId.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crypt\Aes.cs" />
-    <Compile Include="Crypt\Hash.cs" />
-    <Compile Include="Crypt\Polymorphic.cs" />
-    <Compile Include="Extensions\Base32.cs" />
-    <Compile Include="Extensions\Formatter.cs" />
-    <Compile Include="Extensions\Random.cs" />
-    <Compile Include="Fingerprint.cs" />
-    <Compile Include="Generator.cs" />
-    <Compile Include="Model\Enum\License\Edition.cs" />
-    <Compile Include="Model\Enum\License\Tier.cs" />
-    <Compile Include="Model\LicenseKey.cs" />
-    <Compile Include="Model\Location.cs" />
-    <Compile Include="Model\Interface\ISocketEncryption.cs" />
-    <Compile Include="Networking\CryptSettings.cs" />
-    <Compile Include="Networking\Socket.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\SecureApp\SecureApp.Utilities\SecureApp.Utilities.csproj">
+      <Project>{5b2e1c7f-dfdf-4455-b996-3aea493ebd4a}</Project>
+      <Name>SecureApp.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
