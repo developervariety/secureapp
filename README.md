@@ -4,7 +4,7 @@ Socket-based licensing system for .NET
 This project is **in development** and not intended for production use yet.
 
 ## Features (current and to be implemented)
-* Tier License keys
+* Tier license keys
 * Assembly verification
 * Remote code execution
 * Remote variables
