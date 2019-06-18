@@ -1,7 +1,7 @@
 using System;
 
 namespace SecureAppUtil.Crypt
-{    
+{
     public class Polymorphic
     {
         public string Encrypt(string input, string key)
@@ -23,10 +23,10 @@ namespace SecureAppUtil.Crypt
                 finVal[index] = Convert.ToChar(ciVal);
                 kc++;
             }
-            finVal[input.Length] = (char)rnd;
+
+            finVal[input.Length] = (char) rnd;
             string retStr = new string(finVal);
             return retStr;
-
         }
 
         public string Decrypt(string input, string key)
@@ -49,6 +49,7 @@ namespace SecureAppUtil.Crypt
                 finVal[index] = Convert.ToChar(ptVal);
                 kc++;
             }
+
             string retStr = new string(finVal);
             return retStr;
         }
