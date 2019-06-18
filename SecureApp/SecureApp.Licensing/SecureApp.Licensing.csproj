@@ -32,22 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Command\Handshake.cs" />
+    <Compile Include="Model\Interface\ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Command" />
+    <Compile Include="SecureApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SecureApp.Utilities\SecureApp.Utilities.csproj">
       <Project>{5b2e1c7f-dfdf-4455-b996-3aea493ebd4a}</Project>
       <Name>SecureApp.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
