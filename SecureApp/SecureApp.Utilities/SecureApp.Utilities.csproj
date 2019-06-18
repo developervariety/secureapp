@@ -32,17 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DeviceId, Version=4.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\DeviceId.4.2.0\lib\net40\DeviceId.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Fingerprint.cs" />
     <Compile Include="Core\Generator.cs" />
     <Compile Include="Crypt\Aes.cs" />
     <Compile Include="Crypt\Hash.cs" />
@@ -53,6 +47,7 @@
     <Compile Include="Extensions\Random.cs" />
     <Compile Include="Model\Enum\License\Edition.cs" />
     <Compile Include="Model\Enum\License\Tier.cs" />
+    <Compile Include="Model\Interface\IPlugin.cs" />
     <Compile Include="Model\Json\Packet.cs" />
     <Compile Include="Model\LicenseKey.cs" />
     <Compile Include="Model\Location.cs" />
@@ -60,9 +55,6 @@
     <Compile Include="Networking\Socket.cs" />
     <Compile Include="Networking\SocketEncryptionSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
