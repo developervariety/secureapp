@@ -40,25 +40,25 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Fingerprint.cs" />
+    <Compile Include="Core\Generator.cs" />
     <Compile Include="Crypt\Aes.cs" />
     <Compile Include="Crypt\Hash.cs" />
     <Compile Include="Crypt\Polymorphic.cs" />
+    <Compile Include="Crypt\Rsa.cs" />
     <Compile Include="Extensions\Base32.cs" />
     <Compile Include="Extensions\Formatter.cs" />
     <Compile Include="Extensions\Random.cs" />
-    <Compile Include="Fingerprint.cs" />
-    <Compile Include="Generator.cs" />
     <Compile Include="Model\Enum\License\Edition.cs" />
     <Compile Include="Model\Enum\License\Tier.cs" />
+    <Compile Include="Model\Json\Packet.cs" />
     <Compile Include="Model\LicenseKey.cs" />
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Interface\ISocketEncryption.cs" />
-    <Compile Include="Networking\CryptSettings.cs" />
     <Compile Include="Networking\Socket.cs" />
+    <Compile Include="Networking\SocketEncryptionSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace SecureAppUtil.Extensions
                 BinaryFormatter bf = new BinaryFormatter();
                 using (MemoryStream ms = new MemoryStream(Decompress(input)))
                 {
-                    return (TT)bf.Deserialize(ms);
+                    return (TT) bf.Deserialize(ms);
                 }
             }
             catch (Exception ex)
@@ -42,6 +42,7 @@ namespace SecureAppUtil.Extensions
                 {
                     gz.Write(input, 0, input.Length);
                 }
+
                 return ms.ToArray();
             }
         }
@@ -57,10 +58,9 @@ namespace SecureAppUtil.Extensions
                         byte[] byteBuffer = new byte[1024];
                         int bytesRead;
                         while ((bytesRead = gz.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
-                        {
                             decompressed.Write(byteBuffer, 0, bytesRead);
-                        }
                     }
+
                     return decompressed.ToArray();
                 }
             }
