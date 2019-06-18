@@ -5,15 +5,15 @@ using DeviceId.Encoders;
 using DeviceId.Formatters;
 using SecureAppUtil.Model;
 
-namespace SecureAppUtil
+namespace SecureAppUtil.Core
 {
     public class Fingerprint
-    {        
+    {
         public string Generate()
         {
             if (!Directory.Exists(Location.SecureApp))
                 Directory.CreateDirectory(Location.SecureApp);
-            
+
             return new DeviceIdBuilder()
                 .AddProcessorId()
                 .AddMotherboardSerialNumber()
