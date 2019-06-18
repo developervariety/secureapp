@@ -3,15 +3,16 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using SecureAppUtil.Crypt;
 using SecureAppUtil.Extensions;
+using SecureAppUtil.Model.Interface;
 
 namespace SecureAppUtil.Networking
 {
     /// <summary>
-    /// eSock 2.0 by BahNahNah (modified)
-    /// uid=2388291
+    /// Slightly modified eSock 2.0
     /// </summary>
-    public static class Socket
+    public static class SecureSocket
     {
         #region " Server "
 
@@ -20,8 +21,11 @@ namespace SecureAppUtil.Networking
             #region " Delegates "
 
             public delegate void OnClientConnectCallback(Server sender, SocketClient client);
+
             public delegate void OnClientDisconnectCallback(Server sender, SocketClient client, SocketError er);
-            public delegate bool OnClientConnectingCallback(Server sender, System.Net.Sockets.Socket cSock);
+
+            public delegate bool OnClientConnectingCallback(Server sender, Socket cSock);
+
             public delegate void OnDataRetrievedCallback(Server sender, SocketClient client, object[] data);
 
             #endregion
@@ -37,11 +41,25 @@ namespace SecureAppUtil.Networking
 
             #region " Variables and Properties "
 
-            private readonly System.Net.Sockets.Socket _globalSocket;
-            private const int BufferSize = 1000000;
+            private readonly Socket _globalSocket;
+            private int _bufferSize = 1000000;
+
+            private int BufferSize
+            {
+                get => _bufferSize;
+                set
+                {
+                    if (value < 5)
+                        throw new ArgumentOutOfRangeException("BufferSize");
+                    if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
+                    if (IsRunning)
+                        throw new Exception("Cannot set buffer size while server is running.");
+                    _bufferSize = value;
+                }
+            }
 
             public bool IsRunning { get; private set; }
-            public CryptSettings Encryption { get; private set; }
+            public ServerSocketEncryptionSettings Encryption { get; private set; }
 
             #endregion
 
@@ -49,9 +67,15 @@ namespace SecureAppUtil.Networking
 
             public Server()
             {
-                _globalSocket = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                Encryption = new CryptSettings();
+                _globalSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                Encryption = new ServerSocketEncryptionSettings();
                 IsRunning = false;
+            }
+
+            public Server(AddressFamily socketAddressFamily)
+                : this()
+            {
+                _globalSocket = new Socket(socketAddressFamily, SocketType.Stream, ProtocolType.Tcp);
             }
 
             #endregion
@@ -73,6 +97,7 @@ namespace SecureAppUtil.Networking
                 {
                     IsRunning = false;
                 }
+
                 return IsRunning;
             }
 
@@ -91,6 +116,7 @@ namespace SecureAppUtil.Networking
                 {
                     return false;
                 }
+
                 return IsRunning;
             }
 
@@ -100,6 +126,25 @@ namespace SecureAppUtil.Networking
                 _globalSocket.Close();
 
             }
+
+            #endregion
+
+            #region " Encryption "
+
+            public class ServerSocketEncryptionSettings
+            {
+                public ServerSocketEncryptionSettings()
+                {
+                    DefaultClientEncryption = new Aes();
+                    DefaultEncryptionKey = string.Empty;
+                    EnableEncryptionOnConnect = false;
+                }
+
+                public ISocketEncryption DefaultClientEncryption { get; set; }
+                public string DefaultEncryptionKey { get; set; }
+                public bool EnableEncryptionOnConnect { get; set; }
+            }
+
             #endregion
 
             #region " Callbacks "
@@ -108,18 +153,18 @@ namespace SecureAppUtil.Networking
             {
                 if (!IsRunning)
                     return;
-                System.Net.Sockets.Socket cSock = _globalSocket.EndAccept(ar);
+                Socket cSock = _globalSocket.EndAccept(ar);
                 if (OnClientConnecting != null)
                 {
                     if (!OnClientConnecting(this, cSock))
                         return;
                 }
 
-                SocketClient client = new SocketClient(cSock, BufferSize)
+                SocketClient client = new SocketClient(cSock, BufferSize, Encryption.DefaultClientEncryption)
                 {
                     Encryption =
                     {
-                        Key = Encryption.Key
+                        Key = Encryption.DefaultEncryptionKey, Enabled = Encryption.EnableEncryptionOnConnect
                     }
                 };
 
@@ -133,13 +178,15 @@ namespace SecureAppUtil.Networking
             {
                 if (!IsRunning)
                     return;
-                SocketClient client = (SocketClient)ar.AsyncState;
+                
+                SocketClient client = (SocketClient) ar.AsyncState;
                 int packetLength = client.NetworkSocket.EndReceive(ar, out SocketError se);
                 if (se != SocketError.Success)
                 {
                     OnClientDisconnect?.Invoke(this, client, se);
                     return;
                 }
+
                 byte[] packetCluster = new byte[packetLength];
                 Buffer.BlockCopy(client.Buffer, 0, packetCluster, 0, packetLength);
 
@@ -169,6 +216,7 @@ namespace SecureAppUtil.Networking
                                         Buffer.BlockCopy(client.Buffer, 0, buffer, 0, packetLength);
                                         receivePacketChunks.Write(buffer, 0, buffer.Length);
                                     }
+
                                     packet = receivePacketChunks.ToArray();
                                 }
                             }
@@ -177,7 +225,7 @@ namespace SecureAppUtil.Networking
                                 packet = packetReader.ReadBytes(length);
                             }
 
- 
+
                             if (client.Encryption != null)
                                 packet = client.Encryption.Decrypt(packet);
 
@@ -185,12 +233,13 @@ namespace SecureAppUtil.Networking
                             if (OnDataRetrieved != null && retrievedData != null)
                                 OnDataRetrieved(this, client, retrievedData);
 
-                            client.NetworkSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length, SocketFlags.None, RetrieveCallback, client);
+                            client.NetworkSocket.BeginReceive(client.Buffer, 0, client.Buffer.Length,
+                                SocketFlags.None, RetrieveCallback, client);
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        throw ex;
+
                     }
                 }
             }
@@ -201,18 +250,25 @@ namespace SecureAppUtil.Networking
             {
                 public byte[] Buffer { get; set; }
                 public object Tag { get; set; }
-                public System.Net.Sockets.Socket NetworkSocket { get; private set; }
-                public CryptSettings Encryption { get; set; }
-                
-                public SocketClient(System.Net.Sockets.Socket cSock)
+                public Socket NetworkSocket { get; private set; }
+                public SocketEncryptionSettings Encryption { get; set; }
+
+                public SocketClient(Socket cSock)
                 {
                     NetworkSocket = cSock;
                     Buffer = new byte[8192];
                 }
 
-                public SocketClient(System.Net.Sockets.Socket cSock, int bufferSize)
+                public SocketClient(Socket cSock, int bufferSize)
                 {
-                    Encryption = new CryptSettings();
+                    Encryption = new SocketEncryptionSettings();
+                    NetworkSocket = cSock;
+                    Buffer = new byte[bufferSize];
+                }
+
+                public SocketClient(Socket cSock, int bufferSize, ISocketEncryption method)
+                {
+                    Encryption = new SocketEncryptionSettings(method);
                     NetworkSocket = cSock;
                     Buffer = new byte[bufferSize];
                 }
@@ -223,11 +279,10 @@ namespace SecureAppUtil.Networking
                     {
                         byte[] serializedData = Formatter.Serialize(args);
                         if (Encryption != null)
-                        {
                             serializedData = Encryption.Encrypt(serializedData);
-                        }
 
                         byte[] packet;
+
                         using (MemoryStream packetStream = new MemoryStream())
                         using (BinaryWriter packetWriter = new BinaryWriter(packetStream))
                         {
@@ -243,10 +298,10 @@ namespace SecureAppUtil.Networking
                         //Not connected
                     }
                 }
+
                 private void EndSend(IAsyncResult ar)
                 {
-                    SocketError se;
-                    NetworkSocket.EndSend(ar, out se);
+                    NetworkSocket.EndSend(ar, out SocketError _);
                 }
 
                 public void Dispose()
@@ -256,6 +311,7 @@ namespace SecureAppUtil.Networking
                         NetworkSocket.Shutdown(SocketShutdown.Both);
                         NetworkSocket.Disconnect(true);
                     }
+
                     NetworkSocket.Close(1000);
                 }
             }
@@ -270,7 +326,9 @@ namespace SecureAppUtil.Networking
             #region " Delegates "
 
             public delegate void OnConnectAsyncCallback(Client sender, bool success);
+
             public delegate void OnDisconnectCallback(Client sender, SocketError er);
+
             public delegate void OnDataRetrievedCallback(Client sender, object[] data);
 
             #endregion
@@ -285,11 +343,12 @@ namespace SecureAppUtil.Networking
 
             #region " Variables and Properties "
 
-            private readonly System.Net.Sockets.Socket _globalSocket;
+            private readonly Socket _globalSocket;
             private int _bufferSize = 1000000;
             public bool Connected { get; private set; }
             public byte[] PacketBuffer { get; private set; }
-            public CryptSettings Encryption { get; set; }
+            public SocketEncryptionSettings Encryption { get; private set; }
+
             public int BufferSize
             {
                 get => _bufferSize;
@@ -309,11 +368,17 @@ namespace SecureAppUtil.Networking
 
             public Client()
             {
-                _globalSocket = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _globalSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Connected = false;
-                Encryption = new CryptSettings();
+                Encryption = new SocketEncryptionSettings();
             }
-            
+
+            public Client(AddressFamily socketAddressFamily)
+                : this()
+            {
+                _globalSocket = new Socket(socketAddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            }
+
             #endregion"
 
             #region " Connect "
@@ -329,6 +394,44 @@ namespace SecureAppUtil.Networking
                 catch
                 {
                     return false;
+                }
+            }
+
+            public bool Connect(IPEndPoint endpoint)
+            {
+                try
+                {
+                    _globalSocket.Connect(endpoint);
+                    OnConnected();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            public void ConnectAsync(string ip, int port)
+            {
+                _globalSocket.BeginConnect(ip, port, OnConnectAsync, null);
+            }
+
+            public void ConnectAsync(IPEndPoint endpoint)
+            {
+                _globalSocket.BeginConnect(endpoint, OnConnectAsync, null);
+            }
+
+            private void OnConnectAsync(IAsyncResult ar)
+            {
+                try
+                {
+                    _globalSocket.EndConnect(ar);
+                    OnConnect?.Invoke(this, true);
+                    OnConnected();
+                }
+                catch
+                {
+                    OnConnect?.Invoke(this, false);
                 }
             }
 
@@ -400,9 +503,10 @@ namespace SecureAppUtil.Networking
                     OnDisconnect?.Invoke(this, se);
                     return;
                 }
+
                 byte[] packetCluster = new byte[packetLength];
                 Buffer.BlockCopy(PacketBuffer, 0, packetCluster, 0, packetLength);
-            
+
 
                 using (MemoryStream bufferStream = new MemoryStream(packetCluster))
                 using (BinaryReader packetReader = new BinaryReader(bufferStream))
@@ -429,6 +533,7 @@ namespace SecureAppUtil.Networking
                                         Buffer.BlockCopy(PacketBuffer, 0, buffer, 0, packetLength);
                                         receivePacketChunks.Write(buffer, 0, buffer.Length);
                                     }
+
                                     packet = receivePacketChunks.ToArray();
                                 }
                             }
@@ -444,11 +549,16 @@ namespace SecureAppUtil.Networking
                             if (OnDataRetrieved != null && data != null)
                                 OnDataRetrieved(this, data);
 
-                            _globalSocket.BeginReceive(PacketBuffer, 0, PacketBuffer.Length, SocketFlags.None, EndRetrieve, null);
+                            _globalSocket.BeginReceive(PacketBuffer, 0, PacketBuffer.Length, SocketFlags.None,
+                                EndRetrieve, null);
                         }
                     }
-                    catch (Exception ex) { throw ex; }
-                }   
+                    catch
+                    {
+                    }
+                }
+
+
             }
 
             #endregion
