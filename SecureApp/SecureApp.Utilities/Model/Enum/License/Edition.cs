@@ -1,4 +1,4 @@
-namespace SecureAppUtil.Model.Enum.License
+namespace SecureApp.Utilities.Model.Enum.License
 {
     public enum Edition
     {

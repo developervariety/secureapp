@@ -1,8 +1,7 @@
 ﻿using System;
-using SecureAppUtil.Core;
-using SecureAppUtil.Model;
-using SecureAppUtil.Model.Enum.License;
-using Random = SecureAppUtil.Extensions.Random;
+using SecureApp.Utilities.LicenseKey;
+using SecureApp.Utilities.Model;
+using SecureApp.Utilities.Model.Enum.License;
 
 namespace LicenseKeyGenerator
 {
@@ -14,7 +13,7 @@ namespace LicenseKeyGenerator
         {
             LicenseKey data = new LicenseKey
             {
-                ApplicationId = Random.Guid().ToString("N"),
+                ApplicationId = "8315822c-37e3-481c-b8cb-063ec3cf9867",
                 Tier = Tier.Bronze,
                 Edition = Edition.Professional,
                 Expiration = DateTime.Now.AddDays(30)

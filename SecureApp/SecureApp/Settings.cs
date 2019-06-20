@@ -1,16 +1,14 @@
+using System;
 using System.Collections.Generic;
-using SecureAppUtil.Model.Interface;
+using SecureApp.Utilities.Model.Interface;
+using SecureApp.Utilities.Network;
 
 namespace SecureApp
 {
     public class Settings
     {
-        public static class Rsa
-        {
-            public static string PublicKey { get; set; }
-            public static string PrivateKey { get; set; }
-        }
-        
         public static List<IPlugin> Plugins { get; set; }
+        
+        public static List<Tuple<Guid, SecureSocketConnectedClient>> Clients = new List<Tuple<Guid, SecureSocketConnectedClient>>();
     }
 }

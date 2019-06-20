@@ -7,7 +7,7 @@
     <ProjectGuid>{5B2E1C7F-DFDF-4455-B996-3AEA493EBD4A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureAppUtil</RootNamespace>
+    <RootNamespace>SecureApp.Utilities</RootNamespace>
     <AssemblyName>SecureApp.Utilities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -37,23 +39,58 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Generator.cs" />
-    <Compile Include="Crypt\Aes.cs" />
-    <Compile Include="Crypt\Hash.cs" />
-    <Compile Include="Crypt\Polymorphic.cs" />
-    <Compile Include="Crypt\Rsa.cs" />
-    <Compile Include="Extensions\Base32.cs" />
-    <Compile Include="Extensions\Formatter.cs" />
-    <Compile Include="Extensions\Random.cs" />
+    <Compile Include="Cryptography\Aes.cs" />
+    <Compile Include="Cryptography\Polymorphic.cs" />
+    <Compile Include="LicenseKey\Base32.cs" />
+    <Compile Include="LicenseKey\Generator.cs" />
+    <Compile Include="Model\Enum\KeySize.cs" />
     <Compile Include="Model\Enum\License\Edition.cs" />
     <Compile Include="Model\Enum\License\Tier.cs" />
+    <Compile Include="Model\Enum\TransportProtocol.cs" />
+    <Compile Include="Model\Interface\IPacket.cs" />
     <Compile Include="Model\Interface\IPlugin.cs" />
-    <Compile Include="Model\Json\Packet.cs" />
+    <Compile Include="Model\Interface\ISecureSocketClient.cs" />
+    <Compile Include="Model\Interface\ISecureSocketEncryption.cs" />
     <Compile Include="Model\LicenseKey.cs" />
     <Compile Include="Model\Location.cs" />
-    <Compile Include="Model\Interface\ISocketEncryption.cs" />
-    <Compile Include="Networking\Socket.cs" />
-    <Compile Include="Networking\SocketEncryptionSettings.cs" />
+    <Compile Include="NetSerializer\Helpers.cs" />
+    <Compile Include="NetSerializer\ITypeSerializer.cs" />
+    <Compile Include="NetSerializer\Primitives.cs" />
+    <Compile Include="NetSerializer\Serializer.cs" />
+    <Compile Include="NetSerializer\Settings.cs" />
+    <Compile Include="NetSerializer\TypeData.cs" />
+    <Compile Include="NetSerializer\TypeDictionary.cs" />
+    <Compile Include="NetSerializer\TypeIDList.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\ArraySerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\DictionarySerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\EnumSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\GenericSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\NoOpSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\NullableSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\ObjectSerializer.cs" />
+    <Compile Include="NetSerializer\TypeSerializers\PrimitivesSerializer.cs" />
+    <Compile Include="Network\Callbacks\CallbackManager.cs" />
+    <Compile Include="Network\Callbacks\PacketCallback.cs" />
+    <Compile Include="Network\Callbacks\QueuedPacket.cs" />
+    <Compile Include="Network\Client\RemoteCalls\RemoteFunction.cs" />
+    <Compile Include="Network\Client\RemoteCalls\RemoteFunctionManager.cs" />
+    <Compile Include="Network\Client\SecureSocketClient.cs" />
+    <Compile Include="Network\Packets\HandshakePacket.cs" />
+    <Compile Include="Network\Packets\ObjectArrayPacket.cs" />
+    <Compile Include="Network\Packets\SharedSecretPacket.cs" />
+    <Compile Include="Network\RemoteCalls\RemoteCallRequest.cs" />
+    <Compile Include="Network\RemoteCalls\RemoteCallResponse.cs" />
+    <Compile Include="Network\RemoteCalls\RemoteFunctionInfomation.cs" />
+    <Compile Include="Network\Server\BaseServerSocket.cs" />
+    <Compile Include="Network\Server\ClientManager.cs" />
+    <Compile Include="Network\Server\RemoteCalls\RemoteCallServerManager.cs" />
+    <Compile Include="Network\Server\RemoteCalls\RemoteFunctionBind.cs" />
+    <Compile Include="Network\Server\SecureSocketServer.cs" />
+    <Compile Include="Network\SecureSocketConnectedClient.cs" />
+    <Compile Include="Network\SecureSocket.cs" />
+    <Compile Include="Packager.cs" />
+    <Compile Include="PackConfig.cs" />
+    <Compile Include="PacketDefragmenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

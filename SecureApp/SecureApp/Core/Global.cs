@@ -1,14 +1,34 @@
 using System.Linq;
-using SecureAppUtil.Crypt;
-using SecureAppUtil.Model.Interface;
+using SecureApp.Utilities.Model.Interface;
+using SecureApp.Utilities.Network.Server;
 
 namespace SecureApp.Core
 {
     public class Global
     {
-        public static readonly Polymorphic Polymorphic = new Polymorphic();
-        public static readonly Rsa Rsa = new Rsa();
+        public static SecureSocketServer Socket { get; set; }
+        public static RemoteFunctions RemoteFunctions { get; set; }
         
-        public static readonly IPlugin Logger = Settings.Plugins.FirstOrDefault(p => p.Name == "Logger");
+        public static IPlugin Logger { get; set; }
+
+        public static void Init()
+        {
+            Socket = new SecureSocketServer();
+            RemoteFunctions = new RemoteFunctions();
+            new Callbacks();
+
+            Plugins.LoadPlugins();
+            foreach (IPlugin plugin in Settings.Plugins)
+            {
+                plugin.Init();
+            }
+            
+            Logger = Settings.Plugins.FirstOrDefault(p => p.Name == "Logger");
+            
+            Logger?.Execute("Successfully initiated.");
+
+            Socket.StartServer(100);
+            Logger?.Execute("Initiated server.");
+        }
     }
 }

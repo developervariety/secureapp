@@ -1,19 +1,14 @@
-using System;
-using SecureAppUtil.Networking;
-
 namespace SecureApp.Licensing
 {
     public class Base
     {
-        private static readonly SecureSocket.Client Client = new SecureSocket.Client();
-
+        private static readonly Global Global = new Global();
+        
         public Base()
         {
-            Console.WriteLine(Client.Connect("localhost", 0709)
-                ? "Connected to the server."
-                : "Failed to connect to server.");
-
-            Client.Send("LOL");
+            Global.Init();
+            
+            Global.Socket.Connect("localhost", 100);
         }
     }
 }

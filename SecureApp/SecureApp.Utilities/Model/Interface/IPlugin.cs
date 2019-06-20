@@ -1,4 +1,4 @@
-namespace SecureAppUtil.Model.Interface
+namespace SecureApp.Utilities.Model.Interface
 {
     public interface IPlugin
     {
