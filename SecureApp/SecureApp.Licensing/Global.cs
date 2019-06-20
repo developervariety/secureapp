@@ -6,9 +6,11 @@ namespace SecureApp.Licensing
     {
         public static SecureSocketClient Socket { get; set; }
         
-        public void Init()
+        public static void Init()
         {
             Socket = new SecureSocketClient();
+            
+            Socket.Connect("localhost", 100);
         }
     }
 }

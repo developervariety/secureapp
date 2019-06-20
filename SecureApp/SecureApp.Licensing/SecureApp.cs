@@ -8,7 +8,6 @@ namespace SecureApp.Licensing
         {
             Global.Init();
             
-            Global.Socket.Connect("localhost", 100);
         }
     }
 }
