@@ -46,6 +46,8 @@
     <Compile Include="Model\Enum\KeySize.cs" />
     <Compile Include="Model\Enum\License\Edition.cs" />
     <Compile Include="Model\Enum\License\Tier.cs" />
+    <Compile Include="Model\Enum\RemoteCalls\RemoteFunctionResponse.cs" />
+    <Compile Include="Model\Enum\RemoteCalls\RemoteFunctionStatus.cs" />
     <Compile Include="Model\Enum\TransportProtocol.cs" />
     <Compile Include="Model\Interface\IPacket.cs" />
     <Compile Include="Model\Interface\IPlugin.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="Network\Packets\SharedSecretPacket.cs" />
     <Compile Include="Network\RemoteCalls\RemoteCallRequest.cs" />
     <Compile Include="Network\RemoteCalls\RemoteCallResponse.cs" />
-    <Compile Include="Network\RemoteCalls\RemoteFunctionInfomation.cs" />
+    <Compile Include="Network\RemoteCalls\RemoteFunctionInformation.cs" />
     <Compile Include="Network\Server\BaseServerSocket.cs" />
     <Compile Include="Network\Server\ClientManager.cs" />
     <Compile Include="Network\Server\RemoteCalls\RemoteCallServerManager.cs" />

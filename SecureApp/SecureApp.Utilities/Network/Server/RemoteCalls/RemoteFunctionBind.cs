@@ -1,4 +1,5 @@
 ﻿using System;
+using SecureApp.Utilities.Model.Enum.RemoteCalls;
 using SecureApp.Utilities.Model.Interface;
 using SecureApp.Utilities.Network.RemoteCalls;
 
@@ -11,13 +12,13 @@ namespace SecureApp.Utilities.Network.Server.RemoteCalls
         public string Name => _functionInfo.Name;
         public object Tag { get; set; }
 
-        private readonly RemoteFunctionInfomation _functionInfo;
+        private readonly RemoteFunctionInformation _functionInfo;
         private RemoteFunctionCallAuth _authCallback;
 
         private readonly Delegate _functionCall;
 
 
-        internal RemoteFunctionBind(RemoteFunctionInfomation info, Delegate functionCall) 
+        internal RemoteFunctionBind(RemoteFunctionInformation info, Delegate functionCall) 
         {
             _functionInfo = info;
             SetAuthFunc(null);
@@ -38,12 +39,12 @@ namespace SecureApp.Utilities.Network.Server.RemoteCalls
             try {
                 if(_authCallback?.Invoke(client, this) ?? true) {
                     resp.Return = _functionCall.DynamicInvoke(param);
-                    resp.Reponce = FunctionResponseStatus.Success;
+                    resp.Response = RemoteFunctionStatus.Success;
                 } else {
-                    resp.Reponce = FunctionResponseStatus.PermissionDenied;
+                    resp.Response = RemoteFunctionStatus.PermissionDenied;
                 }
             }catch {
-                resp.Reponce = FunctionResponseStatus.ExceptionThrown;
+                resp.Response = RemoteFunctionStatus.ExceptionThrown;
             }
         }
 

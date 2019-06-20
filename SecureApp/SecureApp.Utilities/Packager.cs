@@ -23,7 +23,7 @@ namespace SecureApp.Utilities
                     typeof(HandshakePacket),
                     typeof(SharedSecretPacket),
                     typeof(ObjectArrayPacket),
-                    typeof(RemoteFunctionInfomation),
+                    typeof(RemoteFunctionInformation),
                     typeof(RemoteCallRequest),
                     typeof(RemoteCallResponse),
                    

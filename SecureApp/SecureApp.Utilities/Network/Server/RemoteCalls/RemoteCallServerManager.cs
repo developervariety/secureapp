@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SecureApp.Utilities.Model.Enum.RemoteCalls;
 using SecureApp.Utilities.Network.RemoteCalls;
 
 namespace SecureApp.Utilities.Network.Server.RemoteCalls 
@@ -28,7 +29,7 @@ namespace SecureApp.Utilities.Network.Server.RemoteCalls
             if (_functionLookup.ContainsKey(name))
                 throw new Exception("Function with the same name already exists");
 
-            RemoteFunctionInfomation funcInfo = new RemoteFunctionInfomation {Name = name};
+            RemoteFunctionInformation funcInfo = new RemoteFunctionInformation {Name = name};
 
             if (!_bindableTypes.ContainsKey(a.Method.ReturnType))
                 throw new Exception("Return type is not serializable.");
@@ -53,14 +54,14 @@ namespace SecureApp.Utilities.Network.Server.RemoteCalls
         public void HandleClientFunctionCall(SecureSocketConnectedClient client, RemoteCallRequest request) 
         {
             lock (_syncLock) {
-                RemoteCallResponse respPacket = new RemoteCallResponse(request.CallID, request.Name);
+                RemoteCallResponse respPacket = new RemoteCallResponse(request.CallId, request.Name);
 
                 if (_functionLookup.ContainsKey(request.Name)) {
                     RemoteFunctionBind func = _functionLookup[request.Name];
 
                     if (request.Args.Select(t => t.GetType()).Where((argType, i) => !_bindableTypes.ContainsKey(argType) || !func.ValidParameter(i, _bindableTypes[argType])).Any())
                     {
-                        respPacket.Reponce = FunctionResponseStatus.InvalidParameters;
+                        respPacket.Response = RemoteFunctionStatus.InvalidParameters;
                         client.Send(respPacket);
                         return;
                     }
@@ -68,7 +69,7 @@ namespace SecureApp.Utilities.Network.Server.RemoteCalls
                     func.Invoke(client, respPacket, request.Args);
 
                 } else {
-                    respPacket.Reponce = FunctionResponseStatus.DoesNotExist;
+                    respPacket.Response = RemoteFunctionStatus.DoesNotExist;
                 }
 
                 client.Send(respPacket);

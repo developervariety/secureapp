@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using SecureApp.Utilities.Model.Enum.RemoteCalls;
 using SecureApp.Utilities.Network.RemoteCalls;
 
 namespace SecureApp.Utilities.Network.Client.RemoteCalls 
@@ -8,7 +9,7 @@ namespace SecureApp.Utilities.Network.Client.RemoteCalls
     
     public abstract class RemoteFunction
     {
-        public FunctionResponseStatus LastStatus { get; internal set; }
+        public RemoteFunctionStatus LastStatus { get; internal set; }
         public abstract void SetReturnValue(object val, Guid callId);
     }
 
@@ -65,14 +66,13 @@ namespace SecureApp.Utilities.Network.Client.RemoteCalls
             _client.Send(new RemoteCallRequest
             {
                 Name = _name,
-                CallID = id,
+                CallId = id,
                 Args = args
             });
             
             return id;
         }
-
-
+        
         public override T CallWait(object[] args)
         {
             lock (_syncLock)

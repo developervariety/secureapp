@@ -42,8 +42,8 @@ namespace SecureApp.Utilities.Network.Client.RemoteCalls
                 if (!_functionList.ContainsKey(resp.Name)) return;
                 
                 RemoteFunction f = _functionList[resp.Name];
-                f.LastStatus = resp.Reponce;
-                f.SetReturnValue(resp.Return, resp.CallID);
+                f.LastStatus = resp.Response;
+                f.SetReturnValue(resp.Return, resp.CallId);
             }
         }
     }
