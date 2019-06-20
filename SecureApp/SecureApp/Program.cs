@@ -9,7 +9,6 @@ namespace SecureApp
         {
             Global.Init();
             
-            
             await Task.Delay(-1);
         }
     }
