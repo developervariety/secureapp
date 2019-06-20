@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using SecureApp.Model;
-using SecureAppUtil.Model.Interface;
+using SecureApp.Utilities.Model.Interface;
 
 namespace SecureApp.Core
 {
-    public class Plugins
+    internal static class Plugins
     {
         public static void LoadPlugins()
         {

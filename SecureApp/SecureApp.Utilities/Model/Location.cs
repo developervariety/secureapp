@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SecureAppUtil.Model
+namespace SecureApp.Utilities.Model
 {
     public class Location
     {

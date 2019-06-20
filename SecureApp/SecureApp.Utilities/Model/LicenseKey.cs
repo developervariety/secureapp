@@ -1,7 +1,7 @@
 using System;
-using SecureAppUtil.Model.Enum.License;
+using SecureApp.Utilities.Model.Enum.License;
 
-namespace SecureAppUtil.Model
+namespace SecureApp.Utilities.Model
 {
     public class LicenseKey
     {
