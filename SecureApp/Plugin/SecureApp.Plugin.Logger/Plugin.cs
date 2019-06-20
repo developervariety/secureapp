@@ -1,7 +1,7 @@
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using SecureAppUtil.Model.Interface;
+using SecureApp.Utilities.Model.Interface;
 
 namespace SecureApp.Plugin.Logger
 {
@@ -31,7 +31,10 @@ namespace SecureApp.Plugin.Logger
 
         public void Execute(params object[] args)
         {
-            _logger.Info(args);
+            foreach (object arg in args)
+            {
+                _logger.Info(arg);
+            }
         }
     }
 }
