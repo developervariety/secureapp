@@ -1,0 +1,17 @@
+{
+  "require": {
+    "slim/slim": "^3.0",
+    "slim/php-view": "2.2.0",
+    "illuminate/database": "5.6",
+    "awobaz/compoships": "^1.0",
+    "ramsey/uuid": "3.8.0",
+    "awurth/slim-validation": "^3.1",
+    "akrabat/ip-address-middleware": "^1.0",
+    "hemiframe/php-aes": "~1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app"
+    }
+  }
+}
