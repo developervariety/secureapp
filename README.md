@@ -19,8 +19,8 @@ SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/Sy
 * Secure and compressed communication
 * Minimalistic administrator panel
 
-## Wiki
-You can find more information of in-depth features in the wiki.
+### Wiki
+You can find more information of in-depth features in the wiki and other good information.
 
 ### Development
-This project has been under active delopement since June 2019.
+This project has been under active delopement since June of 2019.
