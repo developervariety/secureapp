@@ -15,9 +15,10 @@ SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/Sy
 * Remote variables
 * Plugin framework
 * Short cryptographically generated license keys
-* Hardware fingerprint lock
+* Hardware fingerprint lockable
 * Secure and compressed communication
 * Minimalistic administrator panel
+* Administrator panel auto-installer
 
 ### Wiki
 You can find more information of in-depth features in the wiki and other good information.
