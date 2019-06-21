@@ -8,27 +8,13 @@ require __DIR__ . "/../vendor/autoload.php";
 session_start();
 
 $app = new App([
-    "settings" => [
-        "displayErrorDetails" => true,
-        "determineRouteBeforeAppMiddleware" => true,
-        "addContentLengthHeader" => false,
-        "db" => [
-            "driver" => "mysql",
-            "host" => "localhost",
-            "database" => "secureapp",
-            "username" => "justin",
-            "password" => "tdXx9EbaLFku2w",
-            "charset" => "utf8",
-            "collation" => "utf8_unicode_ci",
-            "prefix" => ""
-        ]
-    ]
+    $settings
 ]);
 
 $container = $app->getContainer();
 
 $capsule = new Manager;
-$capsule->addConnection($container["settings"]["db"]);
+$capsule->addConnection($settings["settings"]["db"]);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
