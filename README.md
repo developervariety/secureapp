@@ -1,7 +1,5 @@
 SecureApp is a .NET-based licensing solution for developers needing a secure, efficient, and reliable solution. This project brings everything you need to start. No bloated, useless features you will never use, just the correct amount of features you need.
 
-SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/SyncIO). It was originally based off [eSock](https://gist.github.com/BahNahNah/5f66e2c1d5c32fc25f93), but the developer combined two amazing projects into one making it easier for SecureApp.
-
 ## Requirements
 ### Server and Client Library
 * Microsoft Windows Vista - 10
@@ -20,8 +18,9 @@ SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/Sy
 * Remote functions
 * Remote variables
 * Plugin framework
-* Short cryptographically generated license keys
-* Hardware fingerprint lockable
+* Short cryptographically generated keys
+* Announcements system
+* Hardware fingerprint locked
 * Secure and compressed communication
 * Web panel
 
