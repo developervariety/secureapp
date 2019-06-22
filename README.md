@@ -3,12 +3,13 @@ SecureApp is a .NET-based licensing solution for developers needing a secure, ef
 SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/SyncIO). It was originally based off [eSock](https://gist.github.com/BahNahNah/5f66e2c1d5c32fc25f93), but the developer combined two amazing projects into one making it easier for SecureApp.
 
 ## Requirements
+### Server and Client Library
 * Microsoft Windows Vista - 10
 * .NET Framework 4.5
 
 **Note: SecureApp will be ported to .NET Core to enable support for MacOS and Linux.**
 
-**Web panel**
+### Web Panel
 * PHP <= 7.1
 * Nginx
 * [Argon](https://www.creative-tim.com/product/argon-dashboard-pro) (optional, default theme)
@@ -22,7 +23,7 @@ SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/Sy
 * Short cryptographically generated license keys
 * Hardware fingerprint lockable
 * Secure and compressed communication
-* Developer web panel
+* Web panel
 
 ### Wiki
 You can find more information of in-depth features in the wiki and other good information.
