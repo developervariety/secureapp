@@ -1,6 +1,6 @@
 <?php
-return [
 
+return [
     "settings" => [
         "displayErrorDetails" => false,
         "determineRouteBeforeAppMiddleware" => true,
@@ -16,6 +16,4 @@ return [
             "prefix" => ""
         ]
     ]
-
 ];
-

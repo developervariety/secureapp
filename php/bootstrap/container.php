@@ -1,8 +1,6 @@
 <?php
 
-use HemiFrame\Lib\AES;
 use RKA\Middleware\IpAddress;
-
 use Slim\Views\PhpRenderer;
 
 $container["view"] = function () {
@@ -15,8 +13,7 @@ $container["notFoundHandler"] = function ($container) {
             "status" => "error",
             "data" => [
                 "error" => [
-                    "id" => "NOT_FOUND",
-                    "message" => "What the hell are you looking for? GTFO.",
+                    "message" => "The file or page you are looking for does not exist.",
                 ]
             ],
             "timestamp" => time()
@@ -30,7 +27,6 @@ $container["notAllowedHandler"] = function ($container) {
             "status" => "error",
             "data" => [
                 "error" => [
-                    "id" => "METHOD_ERROR",
                     "message" => "Method is not accepted",
                     "allowed" => implode(", ", $methods)
                 ]
@@ -58,12 +54,8 @@ $container["errorHandler"] = function ($container) {
     };
 };
 
-$container["aes"] = function () {
-    return new AES();
-};
-
 $checkProxyHeaders = true;
-$app->add(new IpAddress(true, [], "ip_address", [
+$app->add(new IpAddress(true, [], "ipAddress", [
     "X-Real-IP",
     "Forwarded",
     "X-Forwarded-For",

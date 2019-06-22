@@ -19,4 +19,5 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 require __DIR__ . "/../bootstrap/container.php";
-require __DIR__ . "/../app/Route/website/routes.php";
+require __DIR__ . "/../bootstrap/controllers.php";
+require __DIR__ . "/../app/Route/Website/routes.php";
