@@ -6,11 +6,12 @@ SecureApp's sockets system is based off [SyncIO](https://github.com/BahNahNah/Sy
 * Microsoft Windows Vista - 10
 * .NET Framework 4.5
 
+**Note: SecureApp will be ported to .NET Core to enable support for MacOS and Linux.**
+
 **Web panel**
 * PHP <= 7.1
 * Nginx
-
-**Note: SecureApp will be ported to .NET Core to enable support for MacOS and Linux.**
+* [Argon](https://www.creative-tim.com/product/argon-dashboard-pro) (optional, default theme)
 
 ## Features
 * Auto-updated loader
