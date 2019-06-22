@@ -13,14 +13,16 @@ SecureApp is a .NET-based licensing solution for developers needing a secure, ef
 * [Argon](https://www.creative-tim.com/product/argon-dashboard-pro) (optional, default theme)
 
 ## Features
-* Auto-updated loader
+* Application auto-updater
 * Assembly verification
 * Remote functions
 * Remote variables
 * Plugin framework
 * Short cryptographically generated keys
-* Announcements system
+* Announcements (news system)
+* Exception logging
 * Hardware fingerprint locked
+* Webhook events
 * Secure and compressed communication
 * Web panel
 
