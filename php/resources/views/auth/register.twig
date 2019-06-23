@@ -1,46 +1,46 @@
 {% extends "templates/base.twig" %}
 
 {% block content %}
-    <div class="container">
-        <div class="card col-md-5 mx-auto">
-            <div class="row align-items-center">
-                <div class="card-body">
-                    <h4 class="mb-3 f-w-400">Register your new account</h4>
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-3 f-w-400">Register your new account</h4>
+                <form action="{{ base_url() }}/api/auth/register" method="post" id="registerForm">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-user"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="First name">
+                        <input type="text" class="form-control" placeholder="First name" name="firstName">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-user"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input type="text" class="form-control" placeholder="Last name" name="lastName">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-mail"></i></span>
                         </div>
-                        <input type="email" class="form-control" placeholder="Email address">
+                        <input type="email" class="form-control" placeholder="Email address" name="emailAddress">
                     </div>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-at-sign"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Username">
+                        <input type="text" class="form-control" placeholder="Username" name="username">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-lock"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-lock"></i></span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Confirm Password">
+                        <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword">
                     </div>
                     <div class="form-group text-left mt-2">
                         <div class="checkbox checkbox-success d-inline">
@@ -48,10 +48,28 @@
                             <label for="checkbox-fill-2" class="cr">I agree to the <a href="#">Terms of Service</a> and other policies.</label>
                         </div>
                     </div>
-                    <button class="btn mb-4 btn-gradient-success shadow-1">Register</button>
-                    <p class="mb-2">Already have an account? <a href="{{ path_for("login") }}" class="f-w-400">Log in</a></p>
-                </div>
+                    <button class="btn mb-4 btn-gradient-success shadow-1 btn-block">Register</button>
+                </form>
+
+                <p class="mb-2">Already have an account? <a href="{{ path_for("login") }}" class="f-w-400">Log in</a></p>
             </div>
         </div>
     </div>
+
+    <script>
+        $("#registerForm").submit(function(e) {
+            e.preventDefault();
+
+            var form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: form.serialize(),
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        });
+    </script>
 {% endblock %}

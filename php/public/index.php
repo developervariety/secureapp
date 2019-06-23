@@ -11,9 +11,8 @@ if (PHP_SAPI == "cli-server") {
     }
 
     $settings["displayErrorDetails"] = true;
-    $settings["routerCacheFile"]     = false;
-    $settings["view"]["cache"]       = false;
-
+    $settings["routerCacheFile"] = false;
+    $settings["view"]["cache"] = false;
 }
 
 require __DIR__ . "/../bootstrap/app.php";

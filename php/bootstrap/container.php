@@ -1,12 +1,13 @@
 <?php
 
+use Respect\Validation\Validator;
 use RKA\Middleware\IpAddress;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
 $container["view"] = function ($container) {
     $view = new Twig(__DIR__ . "/../resources/views", [
-        "cache" => $container->get("settings")["view"]["cache"],
+        "cache" => $container("settings")["view"]["cache"],
     ]);
 
     $view->addExtension(new TwigExtension(
@@ -15,6 +16,11 @@ $container["view"] = function ($container) {
     ));
 
     return $view;
+};
+
+$container["validator"] = function () {
+    //Respect\Validation\Validator::with("App\\Validator\\Rules");
+    return new Validator();
 };
 
 $container["notFoundHandler"] = function ($container) {
@@ -63,8 +69,6 @@ $container["errorHandler"] = function ($container) {
         ])->withStatus(500);
     };
 };
-
-
 
 $checkProxyHeaders = isset($container->get("settings")["trustedProxy"])? is_array ($container->get("settings")["trustedProxy"])? true : false : false;
 
