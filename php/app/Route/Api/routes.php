@@ -98,7 +98,12 @@ $app->group("/auth", function () use ($app) {
                 ]);
             }
         } else {
+            $errors = $validator->getErrors();
 
+            return $response->withJson([
+                "status" => "error",
+                "data" => $errors
+            ]);
         }
     });
 });
