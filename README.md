@@ -1,3 +1,5 @@
+[![Discord Server](https://img.shields.io/discord/592163007493308416.svg?label=Discord)](https://discord.gg/kqc9Qes)
+
 SecureApp is a .NET-based licensing solution for developers needing a secure, efficient, and reliable solution. This project brings everything you need to start. No bloated, useless features you will never use, just the correct amount of features you need.
 
 ## Requirements
