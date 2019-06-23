@@ -27,7 +27,12 @@ class Authentication extends Controller
         $body = json_decode($request->body, true);
 
         if ($body["status"] == "error") {
-            $_SESSION["errors"] = $body["data"];
+            foreach ($body["data"] as $key => $value) {
+                foreach ($value as $rule) {
+                    // TODO:: display all errors
+                    $this->flash->addMessage("multidanger", $rule);
+                }
+            }
         }
 
         return $this->view->render($response, "auth/register.twig");

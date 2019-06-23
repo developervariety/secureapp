@@ -1,6 +1,7 @@
 <?php
 
-use RKA\Middleware\IpAddress;
+use Slim\Csrf\Guard;
+use Slim\Flash\Messages;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
 
@@ -14,7 +15,17 @@ $container["view"] = function ($container) {
         $container->request->getUri()
     ));
 
+    $view->getEnvironment()->addGlobal("flash", $container->flash);
+
     return $view;
+};
+
+$container["csrf"] = function () {
+    return new Guard();
+};
+
+$container["flash"] = function () {
+    return new Messages();
 };
 
 
@@ -65,15 +76,3 @@ $container["errorHandler"] = function ($container) {
         ])->withStatus(500);
     };
 };
-
-$checkProxyHeaders = isset($container->get("settings")["trustedProxy"])? is_array ($container->get("settings")["trustedProxy"])? true : false : false;
-
-$checkProxyHeaders = true;
-$app->add(new IpAddress(true, is_array ($container->get("settings")["trustedProxy"])? $container->get("settings")["trustedProxy"] : [], "ipAddress", [
-    "X-Real-IP",
-    "Forwarded",
-    "X-Forwarded-For",
-    "X-Forwarded",
-    "X-Cluster-Client-Ip",
-    "Client-Ip",
-]));

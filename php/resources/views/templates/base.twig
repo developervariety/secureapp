@@ -36,6 +36,10 @@
                 <div class="main-body">
                     <div class="page-wrapper">
                         <div class="row">
+                            <div class="col-md-6 offset-3">
+                                {% include "templates/partials/flash.twig" %}
+                            </div>
+
                             {% block content %}{% endblock %}
                         </div>
                     </div>
