@@ -18,8 +18,8 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 require __DIR__ . "/../bootstrap/container.php";
-require __DIR__ . "/../bootstrap/middleware.php";
 require __DIR__ . "/../bootstrap/controllers.php";
+require __DIR__ . "/../bootstrap/middleware.php";
 
 v::with("App\\Validation\\Rules");
 
