@@ -18,7 +18,7 @@ if (PHP_SAPI == "cli-server") {
 }
 
 
-if($debug)
+if(!$debug)
 {
 
     $settings["displayErrorDetails"] = true;
@@ -26,7 +26,6 @@ if($debug)
     $settings["view"]["cache"] = false;
 
 }
-
 
 require __DIR__ . "/../bootstrap/app.php";
 
