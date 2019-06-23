@@ -7,7 +7,7 @@ use Slim\Views\TwigExtension;
 
 $container["view"] = function ($container) {
     $view = new Twig(__DIR__ . "/../resources/views", [
-        "cache" => $container("settings")["view"]["cache"],
+        "cache" => false//$container("settings")["view"]["cache"],
     ]);
 
     $view->addExtension(new TwigExtension(
