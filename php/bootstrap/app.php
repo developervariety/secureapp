@@ -3,6 +3,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager;
+use Respect\Validation\Validator as v;
 use Slim\App;
 
 $app = new App([
@@ -17,6 +18,10 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 require __DIR__ . "/../bootstrap/container.php";
+require __DIR__ . "/../bootstrap/middleware.php";
 require __DIR__ . "/../bootstrap/controllers.php";
+
+v::with("App\\Validation\\Rules");
+
 require __DIR__ . "/../app/Route/Website/routes.php";
 require __DIR__ . "/../app/Route/Api/routes.php";

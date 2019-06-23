@@ -5,7 +5,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="mb-3 f-w-400">Register your new account</h4>
-                <form action="{{ base_url() }}/api/auth/register" method="post" id="registerForm">
+
+                <form method="post" id="registerForm">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-user"></i></span>
@@ -55,21 +56,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $("#registerForm").submit(function(e) {
-            e.preventDefault();
-
-            var form = $(this);
-
-            $.ajax({
-                type: "POST",
-                url: form.attr("action"),
-                data: form.serialize(),
-                success: function(data) {
-                    alert(data);
-                }
-            });
-        });
-    </script>
 {% endblock %}

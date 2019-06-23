@@ -50,26 +50,29 @@ $app->group("/api", function () use ($app) {
         });
 
         $this->post("/register", function (Request $request, Response $response) {
-            $validator = $this->validator->validate($request, [
+            $validation = $this->validator->validate($request, [
                 "firstName" => V::length(2, 25)
                     ->alnum()
                     ->noWhitespace()
                     ->notEmpty()
-                    ->setName("Username"),
+                    ->setName("First name"),
                 "lastName" => V::length(2, 255)
                     ->alnum()
                     ->noWhitespace()
                     ->notEmpty()
-                    ->setName("Username"),
+                    ->setName("Last name"),
                 "emailAddress" => V::length(6, 255)
                     ->email()
                     ->noWhitespace()
                     ->notEmpty()
-                    ->setName("Email Address"),
+                    ->email()
+                    ->emailAvailable()
+                    ->setName("Email address"),
                 "username" => V::length(6, 45)
                     ->alnum()
                     ->noWhitespace()
                     ->notEmpty()
+                    ->usernameAvailable()
                     ->setName("Username"),
                 "password" => V::length(6, 255)
                     ->alnum()
@@ -80,32 +83,30 @@ $app->group("/api", function () use ($app) {
                     ->setName("Password Confirmation")
             ]);
 
-            if ($validator->isValid()) {
-                $body = $request->getParsedBody();
-
-                if (User::register($body["firstName"], $body["lastName"], $body["emailAddress"], $body["username"], $body["password"], $request->getAttribute("ipAddress"))) {
-                    return $response->withJson([
-                        "status" => "success",
-                        "data" => [
-                            "message" => "You've successfully registered, you may now log in."
-                        ]
-                    ]);
-                } else {
-                    return $response->withJson([
-                        "status" => "error",
-                        "data" => [
-                            "message" => "An unexpected error occurred, please try again later."
-                        ]
-                    ]);
-                }
-            } else {
-                $errors = $validator->getErrors();
-
+            if ($validation->failed()) {
                 return $response->withJson([
                     "status" => "error",
-                    "data" => $errors
+                    "data" => $_SESSION["errors"]
                 ]);
             }
+
+            $body = $request->getParsedBody();
+
+            if (!User::register($body["firstName"], $body["lastName"], $body["emailAddress"], $body["username"], $body["password"], $request->getAttribute("ipAddress"))) {
+                return $response->withJson([
+                    "status" => "error",
+                    "data" => [
+                        "message" => "An unexpected error occurred, please try again later."
+                    ]
+                ]);
+            }
+
+            return $response->withJson([
+                "status" => "success",
+                "data" => [
+                    "message" => "You've successfully registered, you may now log in."
+                ]
+            ]);
         });
     });
 });

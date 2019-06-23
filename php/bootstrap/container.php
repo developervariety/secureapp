@@ -1,6 +1,5 @@
 <?php
 
-use Respect\Validation\Validator;
 use RKA\Middleware\IpAddress;
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
@@ -18,10 +17,7 @@ $container["view"] = function ($container) {
     return $view;
 };
 
-$container["validator"] = function () {
-    //Respect\Validation\Validator::with("App\\Validator\\Rules");
-    return new Validator();
-};
+
 
 $container["notFoundHandler"] = function ($container) {
     return function ($request, $response) use ($container) {
