@@ -7,13 +7,9 @@ use Slim\Views\TwigExtension;
 
 $container["view"] = function ($container) {
     $view = new Twig(__DIR__ . "/../resources/views", [
-<<<<<<< HEAD
-        "cache" => false//$container("settings")["view"]["cache"],
-=======
-        "cache" => $container["settings"]["view"]["cache"],
->>>>>>> 18530a24a823f35faa1c0a1c6866118da0c69989
+        "cache" => false
     ]);
-
+//$container("settings")["view"]["cache"],
     $view->addExtension(new TwigExtension(
         $container->router,
         $container->request->getUri()
