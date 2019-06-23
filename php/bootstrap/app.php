@@ -5,8 +5,6 @@ use Slim\App;
 
 require __DIR__ . "/../vendor/autoload.php";
 
-session_start();
-
 $app = new App([
     $settings
 ]);
