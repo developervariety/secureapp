@@ -6,49 +6,78 @@
             <div class="card-body">
                 <h4 class="mb-3 f-w-400">Register your new account</h4>
 
-                <form method="post" id="registerForm">
-                    <div class="input-group mb-2">
+                <form method="post" autocomplete="off">
+                    <div class="input-group{{ errors.firstName ? '' : ' mb-2' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-user"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="First name" name="firstName">
                     </div>
-                    <div class="input-group mb-2">
+                    {% if errors.firstName %}
+                        <span class="text-danger">{{ errors.firstName | first }}</span>
+                    {% endif %}
+
+                    <div class="input-group{{ errors.lastName ? '' : ' mb-2' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-user"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="Last name" name="lastName">
                     </div>
-                    <div class="input-group mb-2">
+                    {% if errors.lastName %}
+                        <span class="text-danger">{{ errors.lastName | first }}</span>
+                    {% endif %}
+
+                    <div class="input-group{{ errors.emailAddress ? '' : ' mb-2' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-mail"></i></span>
                         </div>
                         <input type="email" class="form-control" placeholder="Email address" name="emailAddress">
                     </div>
-                    <div class="input-group mb-2">
+                    {% if errors.emailAddress %}
+                        <span class="text-danger">{{ errors.emailAddress | first }}</span>
+                    {% endif %}
+
+                    <div class="input-group{{ errors.username ? '' : ' mb-2' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-at-sign"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="Username" name="username">
                     </div>
-                    <div class="input-group mb-3">
+                    {% if errors.username %}
+                        <span class="text-danger">{{ errors.username | first }}</span>
+                    {% endif %}
+
+                    <div class="input-group{{ errors.password ? '' : ' mb-2' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-lock"></i></span>
                         </div>
                         <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
-                    <div class="input-group mb-3">
+                    {% if errors.password %}
+                        <span class="text-danger">{{ errors.password | first }}</span>
+                    {% endif %}
+
+                    <div class="input-group{{ errors.confirmPassword ? '' : ' mb-3' }}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="feather icon-lock"></i></span>
                         </div>
                         <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword">
                     </div>
-                    <div class="form-group text-left mt-2">
+                    {% if errors.confirmPassword %}
+                        <span class="text-danger">{{ errors.confirmPassword | first }}</span>
+                    {% endif %}
+
+                    <div class="form-group text-left">
                         <div class="checkbox checkbox-success d-inline">
-                            <input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2">
-                            <label for="checkbox-fill-2" class="cr">I agree to the <a href="#">Terms of Service</a> and other policies.</label>
+                            <input type="checkbox" name="policies" id="policies">
+                            <label for="policies" class="cr">I agree to the <a href="#">Terms of Service</a> and other policies.</label>
                         </div>
+
+                        {% if errors.policies %}
+                            <span class="text-danger">{{ errors.policies | first }}</span>
+                        {% endif %}
                     </div>
+
                     <button class="btn mb-4 btn-gradient-success shadow-1 btn-block">Register</button>
                 </form>
 
