@@ -1,9 +1,9 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
 use Illuminate\Database\Capsule\Manager;
 use Slim\App;
-
-require __DIR__ . "/../vendor/autoload.php";
 
 $app = new App([
     $settings
