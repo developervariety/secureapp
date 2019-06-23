@@ -19,3 +19,4 @@ $capsule->bootEloquent();
 require __DIR__ . "/../bootstrap/container.php";
 require __DIR__ . "/../bootstrap/controllers.php";
 require __DIR__ . "/../app/Route/Website/routes.php";
+require __DIR__ . "/../app/Route/Api/routes.php";
