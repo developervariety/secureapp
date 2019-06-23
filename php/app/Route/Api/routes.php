@@ -80,13 +80,15 @@ $app->group("/api", function () use ($app) {
                     ->notEmpty()
                     ->setName("Password"),
                 "confirmPassword" => V::equals($request->getParam("password"))
-                    ->setName("Password Confirmation")
+                    ->setName("Password Confirmation"),
+                "policies" => V::notEmpty()
+                    ->setName("Policies")
             ]);
 
             if ($validation->failed()) {
                 return $response->withJson([
                     "status" => "error",
-                    "data" => $_SESSION["errors"]
+                    "data" => $validation->errors()
                 ]);
             }
 
