@@ -6,6 +6,8 @@ use Awobaz\Compoships\Database\Eloquent\Model;
 
 class User extends Model
 {
+    public $timestamps = false;
+
     protected $table = "users";
     protected $fillable = [
         "firstName",
@@ -52,7 +54,7 @@ class User extends Model
             "ipAddress" => $ipAddress
         ]);
 
-        if (!$user) {
+        if ($user) {
             return true;
         }
 
