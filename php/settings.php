@@ -5,6 +5,11 @@ return [
         "displayErrorDetails" => false,
         "determineRouteBeforeAppMiddleware" => true,
         "addContentLengthHeader" => false,
+        "trustedProxy" => false,
+        "routerCacheFile" => "/../cache/router.cache",
+        "view" => [
+            "cache" => "/../cache/views"
+        ],
         "db" => [
             "driver" => "mysql",
             "host" => "localhost",

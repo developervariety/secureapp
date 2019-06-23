@@ -6,7 +6,7 @@ use Slim\Views\TwigExtension;
 
 $container["view"] = function ($container) {
     $view = new Twig(__DIR__ . "/../resources/views", [
-        "cache" => false,
+        "cache" => $container->get("settings")["view"]["cache"],
     ]);
 
     $view->addExtension(new TwigExtension(
@@ -64,8 +64,12 @@ $container["errorHandler"] = function ($container) {
     };
 };
 
+
+
+$checkProxyHeaders = isset($container->get("settings")["trustedProxy"])? is_array ($container->get("settings")["trustedProxy"])? true : false : false;
+
 $checkProxyHeaders = true;
-$app->add(new IpAddress(true, [], "ipAddress", [
+$app->add(new IpAddress(true, is_array ($container->get("settings")["trustedProxy"])? $container->get("settings")["trustedProxy"] : [], "ipAddress", [
     "X-Real-IP",
     "Forwarded",
     "X-Forwarded-For",
