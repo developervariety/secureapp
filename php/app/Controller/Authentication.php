@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Controller\Website;
+namespace App\Controller;
 
-use App\Controller\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
