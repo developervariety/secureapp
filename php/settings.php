@@ -6,9 +6,9 @@ return [
         "determineRouteBeforeAppMiddleware" => true,
         "addContentLengthHeader" => false,
         "trustedProxy" => false,
-        "routerCacheFile" => false,
+        "routerCacheFile" => "/../cache/router.cache",
         "view" => [
-            "cache" => false
+            "cache" => "/../cache/views"
         ],
         "db" => [
             "driver" => "mysql",
