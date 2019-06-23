@@ -82,7 +82,21 @@ $app->group("/auth", function () use ($app) {
         if ($validator->isValid()) {
             $body = $request->getParsedBody();
 
-
+            if (User::register($body["firstName"], $body["lastName"], $body["emailAddress"], $body["username"], $body["password"], $request->getAttribute("ipAddress"))) {
+                return $response->withJson([
+                    "status" => "success",
+                    "data" => [
+                        "message" => "You've successfully registered, you may now log in."
+                    ]
+                ]);
+            } else {
+                return $response->withJson([
+                    "status" => "error",
+                    "data" => [
+                        "message" => "An unexpected error occurred, please try again later."
+                    ]
+                ]);
+            }
         } else {
 
         }
