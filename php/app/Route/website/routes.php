@@ -1,3 +1,3 @@
 <?php
 
-$app->get("/login", "WebsiteAuthentication:login")->setName("login");
+$app->get("/login", "Authentication:login")->setName("login");
