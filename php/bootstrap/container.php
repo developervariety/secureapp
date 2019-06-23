@@ -1,10 +1,20 @@
 <?php
 
 use RKA\Middleware\IpAddress;
-use Slim\Views\PhpRenderer;
+use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
 
-$container["view"] = function () {
-    return new PhpRenderer( __DIR__ . "/../views");
+$container["view"] = function ($container) {
+    $view = new Twig(__DIR__ . "/../resources/views", [
+        "cache" => false,
+    ]);
+
+    $view->addExtension(new TwigExtension(
+        $container->router,
+        $container->request->getUri()
+    ));
+
+    return $view;
 };
 
 $container["notFoundHandler"] = function ($container) {
