@@ -4,10 +4,10 @@ SecureApp is a .NET-based licensing solution for developers needing a secure, ef
 
 ## Requirements
 ### Server and Client Library
-* Microsoft Windows Vista - 10
+* Microsoft Windows Vista+
 * .NET Framework 4.5
 
-**Note: SecureApp will be ported to .NET Core to enable support for MacOS and Linux.**
+**Note: SecureApp will be ported to .NET Core 2.X to enable support for MacOS and Linux.**
 
 ### Web Panel
 * PHP <= 7.1
